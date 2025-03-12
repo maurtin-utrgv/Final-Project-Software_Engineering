@@ -2,14 +2,11 @@
 
 So far the project only has a login page,
     That is, it only so far prompts the user to select a user type: Admin and Assigned User.
-<<<<<<< HEAD
      Also has a continue button 
 
      Paola Avila
-=======
-     Also has a continue button
 
-     (1) already have the main application/login role selection 
+	 (1) already have the main application/login role selection 
 	create a user and save as assined admin or 
 
 
@@ -36,4 +33,3 @@ view assignment details window (ca be in both??)
 
 database setup (at the beginning?? and whichever button user selects just need to call
 					the database and write to it in each seperate function)
->>>>>>> bed9099 (adding sprints to ReadMe)
