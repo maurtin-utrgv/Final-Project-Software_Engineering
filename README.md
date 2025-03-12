@@ -31,3 +31,40 @@ view assignment details window (ca be in both??)
 
 database setup (at the beginning?? and whichever button user selects just need to call
 					the database and write to it in each seperate function)
+     Also has a continue button 
+
+     Paola Avila
+
+<<<<<<< HEAD
+	 (1) already have the main application/login role selection 
+	create a user and save as assined admin or 
+
+
+(2) after login, need the admin interface 
+		where user can create, edit, and delete
+
+			(2a)create a new assignment window
+
+			(2b)edit assignment window
+				(2b.1) delete assignment?? as a button? 
+
+
+view all assignments window (can be in both??)
+
+view assignment details window (ca be in both??)
+
+(3) after login, need the user interface
+		where user can only view and update status
+
+		(3a) view button and then subsequent view window
+
+		(3b) update status of assignment as a button and subsequet window 
+
+
+database setup (at the beginning?? and whichever button user selects just need to call
+					the database and write to it in each seperate function)
+=======
+
+     testing testing 123
+     
+>>>>>>> b178e60fc534a92564c0e68e6878c2556cb85b3f
