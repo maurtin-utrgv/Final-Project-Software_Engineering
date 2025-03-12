@@ -35,7 +35,7 @@ database setup (at the beginning?? and whichever button user selects just need t
 
      Paola Avila
 
-<<<<<<< HEAD
+
 	 (1) already have the main application/login role selection 
 	create a user and save as assined admin or 
 
