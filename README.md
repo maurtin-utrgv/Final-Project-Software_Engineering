@@ -63,8 +63,3 @@ view assignment details window (ca be in both??)
 
 database setup (at the beginning?? and whichever button user selects just need to call
 					the database and write to it in each seperate function)
-=======
-
-     testing testing 123
-     
->>>>>>> b178e60fc534a92564c0e68e6878c2556cb85b3f
