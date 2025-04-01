@@ -55,7 +55,7 @@ def login(role):
         assigned_interface()
 
 # ------------------------------------------
-# Admin Interface (can create, edit, delete)
+# Admin Interface (can create, edit, delete) -- Martin
 # ------------------------------------------
 def admin_interface():
     admin_frame = Frame(root)
