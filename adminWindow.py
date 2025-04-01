@@ -8,8 +8,8 @@ from tkinter import messagebox
 # -------------------------------
 def get_db_connection():
     # Connect to the SQLite database (or create it if it doesn't exist)
-    #conn = sqlite3.connect('toDoListAssignments.db')
-    conn = sqlite3.connect('assignments.db')
+    conn = sqlite3.connect('toDoListAssignments.db')
+    #conn = sqlite3.connect('assignments.db')
     return conn
 
 def initialize_db():
@@ -245,3 +245,6 @@ if __name__ == "__main__":
     
     #Call the main loop for displaying the root window
     root.mainloop()
+
+    #look into why sqlite is putting numbers along side created assignments. even tho some get deleted
+        #the number keeps getting added as is to what number is next 
