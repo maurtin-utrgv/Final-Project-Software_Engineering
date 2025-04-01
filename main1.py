@@ -3,7 +3,7 @@ from tkinter import *
 from tkinter import messagebox
 
 # ------------------------------------------
-# Database Setup
+# Database Setup -- Paola Avila
 # ------------------------------------------
 def init_db():
     conn = sqlite3.connect('assignments.db')
@@ -35,7 +35,7 @@ root.geometry("500x400")
 user_role = StringVar()
 
 # ------------------------------------------
-# Login / Role Selection Frame
+# Login / Role Selection Frame -- Jannette
 # ------------------------------------------
 login_frame = Frame(root)
 Label(login_frame, text="Select User Type:", font=("Georgia", 14)).grid(row=0, column=0, columnspan=2, pady=10)
@@ -55,7 +55,7 @@ def login(role):
         assigned_interface()
 
 # ------------------------------------------
-# Admin Interface (can create, edit, delete)
+# Admin Interface (can create, edit, delete) -- Martin
 # ------------------------------------------
 def admin_interface():
     admin_frame = Frame(root)
