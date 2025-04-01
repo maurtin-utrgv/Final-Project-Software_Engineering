@@ -3,7 +3,7 @@ from tkinter import *
 from tkinter import messagebox
 
 # ------------------------------------------
-# Database Setup
+# Database Setup -- Paola Avila
 # ------------------------------------------
 def init_db():
     conn = sqlite3.connect('assignments.db')
@@ -35,7 +35,7 @@ root.geometry("500x400")
 user_role = StringVar()
 
 # ------------------------------------------
-# Login / Role Selection Frame
+# Login / Role Selection Frame -- Jannette
 # ------------------------------------------
 login_frame = Frame(root)
 Label(login_frame, text="Select User Type:", font=("Georgia", 14)).grid(row=0, column=0, columnspan=2, pady=10)
@@ -59,9 +59,9 @@ def login(role):
 # ------------------------------------------
 def admin_interface():
     admin_frame = Frame(root)
-    Label(admin_frame, text="Admin Dashboard", font=("Helvetica", 16)).grid(row=0, column=0, columnspan=2, pady=10)
-    Button(admin_frame, text="Create New Assignment", width=25, font=("Helvetica", 12), command=create_assignment_window).grid(row=1, column=0, padx=5, pady=5)
-    Button(admin_frame, text="View All Assignments", width=25, font=("Helvetica", 12), command=lambda: view_assignments_window("admin")).grid(row=1, column=1, padx=5, pady=5)
+    Label(admin_frame, text="Admin Dashboard", font=("Georgia", 16)).grid(row=0, column=0, columnspan=2, pady=10)
+    Button(admin_frame, text="Create New Assignment", width=25, font=("Georgia", 12), command=create_assignment_window).grid(row=1, column=0, padx=5, pady=5)
+    Button(admin_frame, text="View All Assignments", width=25, font=("Georgia", 12), command=lambda: view_assignments_window("admin")).grid(row=1, column=1, padx=5, pady=5)
     admin_frame.pack(pady=20)
 
 # ------------------------------------------
@@ -69,13 +69,17 @@ def admin_interface():
 # ------------------------------------------
 def assigned_interface():
     assigned_frame = Frame(root)
-    Label(assigned_frame, text="User Dashboard", font=("Helvetica", 16)).grid(row=0, column=0, columnspan=2, pady=10)
-    Button(assigned_frame, text="View All Assignments", width=25, font=("Helvetica", 12), command=lambda: view_assignments_window("assigned")).grid(row=1, column=0, padx=5, pady=5)
+    Label(assigned_frame, text="User Dashboard", font=("Georgia", 16)).grid(row=0, column=0, columnspan=2, pady=10)
+    Button(assigned_frame, text="View All Assignments", width=25, font=("Georgia", 12), command=lambda: view_assignments_window("assigned")).grid(row=1, column=0, padx=5, pady=5)
     assigned_frame.pack(pady=20)
 
+#need to make 
+    #create_assignme˜nt_window function
+    #view_assignments_window
 
 
 #Call the main loop for displaying the root window
+
 root.mainloop()
 
 
