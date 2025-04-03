@@ -69,6 +69,49 @@ def create_assignment_window():
     description_entry.grid(row=2, column=1, padx=5, pady=5)
     OptionMenu(win, status_var, "completed", "not completed").grid(row=3, column=1, padx=5, pady=5)
     people_entry.grid(row=4, column=1, padx=5, pady=5)
+
+    '''
+    # -------------------------------
+    # Autocomplete Dropdown
+    # -------------------------------
+    suggestion_listbox = Listbox(win, width=30, height=4)
+    
+    def fetch_suggestions(event):
+        typed = people_entry.get()
+        if typed:
+            conn = sqlite3.connect('people.db')  # enter the file_name of the db file with the people inside of it
+            c = conn.cursor()
+            c.execute("SELECT name FROM people WHERE name LIKE ?", (f"%{typed}%",))
+                                                                                        #assume the db is structed as:
+                                                                                        CREATE TABLE people (
+                                                                                            id INTEGER PRIMARY KEY AUTOINCREMENT,
+                                                                                            name TEXT NOT NULL
+                                                                                            )
+            matches = c.fetchall()
+            conn.close()
+            
+            suggestion_listbox.delete(0, END)
+            for match in matches:
+                suggestion_listbox.insert(END, match[0])
+            suggestion_listbox.grid(row=5, column=1, padx=5, pady=(0,10))
+        else:
+            suggestion_listbox.grid_remove()
+
+    def select_suggestion(event):
+        selected = suggestion_listbox.get(ACTIVE)
+        current = people_entry.get()
+        if current:
+            # Append to existing comma-separated list
+            updated = current + ", " + selected
+        else:
+            updated = selected
+        people_entry.delete(0, END)
+        people_entry.insert(0, updated)
+        suggestion_listbox.grid_remove()
+
+    people_entry.bind("<KeyRelease>", fetch_suggestions)
+    suggestion_listbox.bind("<<ListboxSelect>>", select_suggestion)
+    '''    
     
     def submit_assignment():
         name = name_entry.get()
@@ -96,6 +139,7 @@ def create_assignment_window():
 def view_assignment_details(assignment_id, role):
     win = Toplevel(root)
     win.title("Assignment Details")
+    win.geometry("300x200")
     
     conn = get_db_connection()
     c = conn.cursor()
@@ -212,7 +256,7 @@ def edit_assignment_window(assignment):
 # -------------------------------
 def view_assignments_window(role):
     win = Toplevel(root)
-    win.geometry("500x400")
+    win.geometry("300x200")
     win.title("All Assignments")
     
     conn = get_db_connection()
@@ -223,7 +267,7 @@ def view_assignments_window(role):
     
     if assignments:
         for assignment in assignments:
-            assignment_str = f"{assignment[0]}: {assignment[1]}"
+            assignment_str = assignment[1]
             # Use a lambda with default argument to capture the current assignment id
             Button(win, text=assignment_str, command=lambda a_id=assignment[0]: view_assignment_details(a_id, role)).pack(padx=10, pady=5)
     else:
@@ -246,5 +290,3 @@ if __name__ == "__main__":
     #Call the main loop for displaying the root window
     root.mainloop()
 
-    #look into why sqlite is putting numbers along side created assignments. even tho some get deleted
-        #the number keeps getting added as is to what number is next 
