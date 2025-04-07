@@ -1,6 +1,8 @@
 import sqlite3
 from tkinter import *
 from tkinter import messagebox
+from userWindow import *
+from adminWindow import *
 
 # ------------------------------------------
 # Database Setup -- Paola Avila
