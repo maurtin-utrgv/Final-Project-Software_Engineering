@@ -1,15 +1,19 @@
+import os
 from tkinter import *
 from tkinter import messagebox
-from adminWindow import *
 import sqlite3  
+
+from adminWindow import *
+from assignedWindow import assigned_interface
 
 # -------------------------------
 # Database Functions
 # -------------------------------
 def get_db_connection():
     # Connect to the SQLite database (or create it if it doesn't exist)
-    conn = sqlite3.connect('users.db')
-    #conn = sqlite3.connect('assignments.db')
+    base_dir = os.path.dirname(os.path.abspath(__file__))
+    db_path = os.path.join(base_dir, 'users.db')
+    conn = sqlite3.connect(db_path)
     return conn
 
 def initialize_db():
@@ -41,8 +45,29 @@ def login():
     if result:
         user_type = result[3]  
         messagebox.showinfo("Login Successful", f"Welcome, {username}!\nRole: {user_type}")
+        #close the login window
+        login_window.destroy()
+
+        #create the single main window
+        root = Tk()
+        if user_type.lower() == "admin":
+                # inject this root into adminWindow and call YOUR admin_interface()
+                import adminWindow
+                root.title("Admin Dashboard")
+                adminWindow.root = root
+                adminWindow.admin_interface()  
+        else:
+                # non-admin: call your assigned_interface()
+                from assignedWindow import assigned_interface
+                root.title("My Assignments")
+                assigned_interface(root, username)
+
+        # start the Tk event loop exactly once
+        root.mainloop()
     else:
         messagebox.showerror("Login Failed", "Invalid username or password")
+
+
         
 # Function to open signup window
 def open_signup():

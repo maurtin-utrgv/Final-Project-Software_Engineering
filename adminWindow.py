@@ -1,6 +1,9 @@
+import os
 import sqlite3
 from tkinter import *
+import datetime
 from tkinter import messagebox
+
 
 
 # -------------------------------
@@ -8,8 +11,9 @@ from tkinter import messagebox
 # -------------------------------
 def get_db_connection():
     # Connect to the SQLite database (or create it if it doesn't exist)
-    conn = sqlite3.connect('toDoListAssignments.db')
-    #conn = sqlite3.connect('assignments.db')
+    base_dir = os.path.dirname(os.path.abspath(__file__))
+    db_path = os.path.join(base_dir, 'toDoListAssignments.db')
+    conn = sqlite3.connect(db_path)
     return conn
 
 def initialize_db():
@@ -58,67 +62,61 @@ def create_assignment_window():
     Label(win, text="People Involved:").grid(row=4, column=0, sticky=E, padx=5, pady=5)
     
     name_entry = Entry(win, width=30)
-    due_date_entry = Entry(win, width=30)
+    name_entry.grid(row=0, column=1, padx=5, pady=5)
+
     description_entry = Entry(win, width=30)
+    description_entry.grid(row=2, column=1, padx=5, pady=5)
+
     status_var = StringVar(win)
     status_var.set("not completed") #default value
-    people_entry = Entry(win, width=30)
     
-    name_entry.grid(row=0, column=1, padx=5, pady=5)
-    due_date_entry.grid(row=1, column=1, padx=5, pady=5)
-    description_entry.grid(row=2, column=1, padx=5, pady=5)
     OptionMenu(win, status_var, "completed", "not completed").grid(row=3, column=1, padx=5, pady=5)
-    people_entry.grid(row=4, column=1, padx=5, pady=5)
 
-    '''
-    # -------------------------------
-    # Autocomplete Dropdown
-    # -------------------------------
-    suggestion_listbox = Listbox(win, width=30, height=4)
-    
-    def fetch_suggestions(event):
-        typed = people_entry.get()
-        if typed:
-            conn = sqlite3.connect('people.db')  # enter the file_name of the db file with the people inside of it
-            c = conn.cursor()
-            c.execute("SELECT name FROM people WHERE name LIKE ?", (f"%{typed}%",))
-                                                                                        #assume the db is structed as:
-                                                                                        CREATE TABLE people (
-                                                                                            id INTEGER PRIMARY KEY AUTOINCREMENT,
-                                                                                            name TEXT NOT NULL
-                                                                                            )
-            matches = c.fetchall()
-            conn.close()
-            
-            suggestion_listbox.delete(0, END)
-            for match in matches:
-                suggestion_listbox.insert(END, match[0])
-            suggestion_listbox.grid(row=5, column=1, padx=5, pady=(0,10))
-        else:
-            suggestion_listbox.grid_remove()
+    #due date: three spin boxes 
+    today = datetime.date.today()
+    due_frame = Frame(win)
+    due_frame.grid(row=1, column=1, sticky=W, padx=5, pady=5)
+    #month
+    Label(due_frame, text="Month:").pack(side=LEFT)
+    month_spin = Spinbox(due_frame, from_=1, to=12, width=3)
+    month_spin.pack(side=LEFT)
+    #day
+    Label(due_frame, text="  Day:").pack(side=LEFT)
+    day_spin = Spinbox(due_frame, from_=1, to=31, width=3)
+    day_spin.pack(side=LEFT)
+    #year
+    Label(due_frame, text="  Year:").pack(side=LEFT)
+    year_spin = Spinbox(due_frame, from_=today.year, to=today.year+5, width=5)
+    year_spin.pack(side=LEFT)
 
-    def select_suggestion(event):
-        selected = suggestion_listbox.get(ACTIVE)
-        current = people_entry.get()
-        if current:
-            # Append to existing comma-separated list
-            updated = current + ", " + selected
-        else:
-            updated = selected
-        people_entry.delete(0, END)
-        people_entry.insert(0, updated)
-        suggestion_listbox.grid_remove()
+    #fetch all non-admin usernames to assign assignments to 
+    base_dir = os.path.dirname(os.path.abspath(__file__))
+    users_db = os.path.join(base_dir, 'users.db')             # ← point at the real users.db
+    conn_users = sqlite3.connect(users_db)
+    c_users = conn_users.cursor()
+    c_users.execute("SELECT username FROM users WHERE user_type!='Admin'")
+    user_rows = c_users.fetchall()
+    conn_users.close()
+    usernames = [u[0] for u in user_rows]
 
-    people_entry.bind("<KeyRelease>", fetch_suggestions)
-    suggestion_listbox.bind("<<ListboxSelect>>", select_suggestion)
-    '''    
+    #create a multi-select listbox 
+    people_listbox = Listbox(win, selectmode=MULTIPLE, width=30, height=4)
+    for u in usernames:
+        people_listbox.insert(END, u)
+    people_listbox.grid(row=4, column=1, padx=5, pady=5)   
+      
     
     def submit_assignment():
         name = name_entry.get()
-        due_date = due_date_entry.get()
+        m = int(month_spin.get())
+        d = int(day_spin.get())
+        y = int(year_spin.get())
+        due_date = f"{y:04d}-{m:02d}-{d:02d}"
         description = description_entry.get()
         status = status_var.get()
-        people = people_entry.get()
+        #collect all selected user from the list box 
+        selected = [people_listbox.get(i) for i in people_listbox.curselection()]
+        people = ", ".join(selected)
         if not name:
             messagebox.showerror("Error", "Name is required.")
             return
@@ -131,7 +129,9 @@ def create_assignment_window():
         messagebox.showinfo("Success", "Assignment created successfully!")
         win.destroy()
     
+    # Submit button (row may need bump if you insert more rows above)
     Button(win, text="Submit", command=submit_assignment).grid(row=5, column=0, columnspan=2, pady=10)
+
 
 # ------------------------------------------
 # View/Edit Assignment Details Window
