@@ -16,7 +16,12 @@ def assigned_interface(root, current_user):
         current_user (str): username of the logged-in user
     """
     frame = Frame(root)
-    frame.pack(pady=20)
+
+    def logout():
+        """Close assigned-user dashboard and return to login."""
+        root.destroy()
+        from Login_Page import login_gui
+        login_gui()
 
     Label(frame, text=f"Welcome, {current_user}", font=("Helvetica", 16)).grid(row=0, column=0, pady=10)
     
@@ -28,7 +33,10 @@ def assigned_interface(root, current_user):
         command=lambda: view_assignments_window(root, "assigned", current_user)
     ).grid(row=1, column=0, pady=5)
 
+    Button(frame, text="Logout", width=25, font=("Helvetica", 12), fg="red", command=logout) \
+        .grid(row=2, column=0, pady=(10,0))
 
+    frame.pack(pady=20)
 # ------------------------------------------
 # View Assignments (Assigned User)
 # ------------------------------------------

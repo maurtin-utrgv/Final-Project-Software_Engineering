@@ -34,6 +34,17 @@ def initialize_db():
     conn.close()
 
 
+# -------------------------------
+# Logout
+# Close the admin dashboard and return to login screen
+# -------------------------------
+def logout():
+    global root
+    root.destroy()
+    # import login routine only when needed, to avoid circular imports
+    from Login_Page import login_gui
+    login_gui()
+
 
 # ------------------------------------------
 # Admin Interface (can create, edit, delete)
@@ -41,8 +52,14 @@ def initialize_db():
 def admin_interface():
     admin_frame = Frame(root)
     Label(admin_frame, text="Admin Dashboard", font=("Helvetica", 16)).grid(row=0, column=0, columnspan=2, pady=10)
-    Button(admin_frame, text="Create New Assignment", width=25, font=("Helvetica", 12), command=create_assignment_window).grid(row=1, column=0, padx=5, pady=5)
-    Button(admin_frame, text="View/Edit All Assignments", width=25, font=("Helvetica", 12), command=lambda: view_assignments_window("admin")).grid(row=1, column=1, padx=5, pady=5)
+    Button(admin_frame, text="Create New Assignment",   width=25, font=("Helvetica", 12), command=create_assignment_window) \
+        .grid(row=1, column=0, padx=5, pady=5)
+    Button(admin_frame, text="View/Edit All Assignments",width=25, font=("Helvetica", 12), command=lambda: view_assignments_window("admin")) \
+        .grid(row=1, column=1, padx=5, pady=5)
+
+    # ——— Logout Button ———
+    Button(admin_frame, text="Logout", width=25, font=("Helvetica", 12), fg="red", command=logout) \
+        .grid(row=2, column=0, columnspan=2, pady=(10,0))
     admin_frame.pack(pady=20)
 
 
@@ -289,4 +306,3 @@ if __name__ == "__main__":
     
     #Call the main loop for displaying the root window
     root.mainloop()
-
