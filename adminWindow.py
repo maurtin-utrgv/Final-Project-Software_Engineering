@@ -6,6 +6,7 @@ from tkinter import messagebox
 
 
 
+
 # -------------------------------
 # Database Functions
 # -------------------------------
@@ -39,10 +40,10 @@ def initialize_db():
 # Close the admin dashboard and return to login screen
 # -------------------------------
 def logout():
+    from Login_page import login_gui
     global root
-    root.destroy()
     # import login routine only when needed, to avoid circular imports
-    from Login_Page import login_gui
+    root.destroy()
     login_gui()
 
 

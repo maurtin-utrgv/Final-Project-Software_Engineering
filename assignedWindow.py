@@ -18,9 +18,9 @@ def assigned_interface(root, current_user):
     frame = Frame(root)
 
     def logout():
+        from Login_page import login_gui
         """Close assigned-user dashboard and return to login."""
         root.destroy()
-        from Login_Page import login_gui
         login_gui()
 
     Label(frame, text=f"Welcome, {current_user}", font=("Helvetica", 16)).grid(row=0, column=0, pady=10)
