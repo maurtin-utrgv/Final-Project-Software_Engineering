@@ -72,7 +72,7 @@ def view_assignments_window(root, role, current_user=None):
                 win,
                 text=assignment[1],  # show assignment name
                 width=30,
-                command=lambda a_id=assignment[0]: view_assignment_details(a_id, role)
+                command=lambda a_id=assignment[0]: view_assignment_details(a_id, "assigned")
             ).pack(padx=10, pady=5)
         if not found:
             Label(win, text="No assignments assigned to you.", font=("Helvetica", 12)).pack(padx=10, pady=10)

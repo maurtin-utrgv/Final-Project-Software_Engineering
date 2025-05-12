@@ -106,7 +106,7 @@ def login_gui():
 
     login_window = Tk()
     login_window.title("Login")
-    login_window.geometry("500x500")
+    login_window.geometry("500x250")
 
     Label(login_window, text="Username").pack()
     login_username = Entry(login_window)

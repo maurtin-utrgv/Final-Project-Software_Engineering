@@ -155,9 +155,9 @@ def create_assignment_window():
 # View/Edit Assignment Details Window
 # ------------------------------------------
 def view_assignment_details(assignment_id, role):
-    win = Toplevel(root)
+    win = Toplevel()
     win.title("Assignment Details")
-    win.geometry("300x200")
+    win.geometry("500x250")
     
     conn = get_db_connection()
     c = conn.cursor()
@@ -177,9 +177,9 @@ def view_assignment_details(assignment_id, role):
     Label(win, text=f"Status: {assignment[4]}", font=("Helvetica", 12)).grid(row=3, column=0, sticky=W, padx=10, pady=5)
     Label(win, text=f"People Involved: {assignment[5]}", font=("Helvetica", 12)).grid(row=4, column=0, sticky=W, padx=10, pady=5)
     
-    if role == "admin":
+    if role.lower() == "admin":
         Button(win, text="Edit Assignment", font=("Helvetica", 12), command=lambda: edit_assignment_window(assignment)).grid(row=5, column=0, pady=10)
-    elif role == "assigned":
+    elif role.lower() == "assigned":
         # Assigned users can update the status of the assignment
         Label(win, text="Update Status:", font=("Helvetica", 12)).grid(row=5, column=0, sticky=W, padx=10, pady=5)
         status_var = StringVar(win)
@@ -274,7 +274,7 @@ def edit_assignment_window(assignment):
 # -------------------------------
 def view_assignments_window(role):
     win = Toplevel(root)
-    win.geometry("300x200")
+    win.geometry("300x300")
     win.title("All Assignments")
     
     conn = get_db_connection()
