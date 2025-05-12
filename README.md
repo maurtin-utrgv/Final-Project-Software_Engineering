@@ -1,5 +1,15 @@
 # Final-Project-Software_Engineering
 
+Jannette Carranza
+
+Paola Avila 
+
+Mariana Resendez 	
+
+Martin Vega 	
+
+Run Login_page.py to run the application in its entirety
+
 So far the project only has a login page,
     That is, it only so far prompts the user to select a user type: Admin and Assigned User.
      Also has a continue button
@@ -62,4 +72,6 @@ view assignment details window (ca be in both??)
 
 
 database setup (at the beginning?? and whichever button user selects just need to call
-					the database and write to it in each seperate function)
+					the database and write to it in each seperate function)	
+
+
