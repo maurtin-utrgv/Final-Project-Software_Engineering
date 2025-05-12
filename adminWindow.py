@@ -296,7 +296,10 @@ def view_assignments_window(role):
 # Main Application (Testing Area)
 # -------------------------------
 if __name__ == "__main__":
+    from tkinter import ttk
     root = Tk()
+    style = ttk.Style(root)
+    style.theme_use('clam')
     root.title("Assignment Manager")
     root.geometry("500x400")
     

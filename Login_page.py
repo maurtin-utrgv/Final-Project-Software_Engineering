@@ -33,6 +33,7 @@ def initialize_db():
 
 # Function to handle login
 def login():
+
     username = login_username.get()
     password = login_password.get()
 
@@ -49,7 +50,10 @@ def login():
         login_window.destroy()
 
         #create the single main window
+        from tkinter import ttk
         root = Tk()
+        style = ttk.Style(root)
+        style.theme_use('clam')
         if user_type.lower() == "admin":
                 # inject this root into adminWindow and call YOUR admin_interface()
                 import adminWindow
@@ -143,8 +147,16 @@ def signup_window():
     Radiobutton(signup_win, text="Admin", variable=user_type_var, value="Admin").pack()
 
     Button(signup_win, text="Sign Up", command=signup).pack()
-    
+
+    # Back to Login button
+    def go_back():
+        signup_win.destroy()
+        login_gui()
+
+    Button(signup_win, text="Back to Login", command=go_back).pack(pady=(5,0))
+
     signup_win.mainloop()
+    
 
 # Start the application
 initialize_db()
